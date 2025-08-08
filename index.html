@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Achorvest Capital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(145deg, #000000, #001f1f);
+      color: #f89a0d;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+      font-size: 1.8rem;
+    }
+
+    .invest {
+      padding: 2em;
+      background: linear-gradient(145deg, #3b39c2, #001f1f);
+      border-radius: 12px;
+      box-shadow: 0px 2px 8px #f89a0d;
+      text-align: center;
+      margin-bottom: 30px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .investing img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #000000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .come {
+      display: block;
+    }
+
+    @media screen and (min-width: 768px) {
+      .come {
+        display: none;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="come">
+  <h1>SHIPWISE FERRIES</h1>
+</div>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 1</h2>
+    <img src="ferry1.jpg" alt="Ferry 1">
+    <h3>UGX 18,750</h3>
+    <button onclick="buyPackage('FERRY 1', 18750)">Invest UGX 18,750</button>
+  </div>
+</section>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 2</h2>
+    <img src="ferry2.jpg" alt="Ferry 2">
+    <h3>UGX 37,500</h3>
+    <button onclick="buyPackage('FERRY 2', 37500)">Invest UGX 37,500</button>
+  </div>
+</section>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 3</h2>
+    <img src="ferry3.jpg" alt="Ferry 3">
+    <h3>UGX 75,000</h3>
+    <button onclick="buyPackage('FERRY 3', 75000)">Invest UGX 75,000</button>
+  </div>
+</section>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 4</h2>
+    <img src="ferry4.jpg" alt="Ferry 4">
+    <h3>UGX 187,500</h3>
+    <button onclick="buyPackage('FERRY 4', 187500)">Invest UGX 187,500</button>
+  </div>
+</section>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 5</h2>
+    <img src="ferry5.jpg" alt="Ferry 5">
+    <h3>UGX 262,500</h3>
+    <button onclick="buyPackage('FERRY 5', 262500)">Invest UGX 262,500</button>
+  </div>
+</section>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 6</h2>
+    <img src="ferry6.jpg" alt="Ferry 6">
+    <h3>UGX 375,000</h3>
+    <button onclick="buyPackage('FERRY 6', 375000)">Invest UGX 375,000</button>
+  </div>
+</section>
+
+<section class="invest">
+  <div class="investing">
+    <h2>FERRY 7</h2>
+    <img src="ferry7.jpg" alt="Ferry 7">
+    <h3>UGX 562,500</h3>
+    <button onclick="buyPackage('FERRY 7', 562500)">Invest UGX 562,500</button>
+  </div>
+</section>
+
+<script>
+  function buyPackage(name, amount) {
+    const maxBuys = 4;
+    const key = `package_${name}`;
+    const existing = JSON.parse(localStorage.getItem(key)) || [];
+
+    if (existing.length >= maxBuys) {
+      alert("You have reached the maximum number of purchases for this package.");
+      return;
+    }
+
+    const now = new Date();
+    const expiry = new Date(now);
+    expiry.setDate(now.getDate() + 120);
+
+    const newPurchase = {
+      name,
+      amount,
+      date: now.toISOString(),
+      expires: expiry.toISOString()
+    };
+
+    existing.push(newPurchase);
+    localStorage.setItem(key, JSON.stringify(existing));
+
+    window.location.href = "incentive.html";
+  }
+</script>
+</script>
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+      });
+  </script>
+
+</body>
+</html>

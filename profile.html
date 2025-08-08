@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Achorvest Capital - Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      padding-bottom: 80px;
+      background: linear-gradient(145deg, #000000, #001f1f);
+      color: white;
+    }
+
+    .card {
+       background: linear-gradient(145deg, #3b39c2, #001f1f);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #eff1eb;
+      color: black;
+      font-size: 14px;
+      cursor: pointer;
+       font-weight: bold;
+    }
+
+    input[type="text"], input[readonly] {
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      width: 90%;
+    }
+
+    .come {
+      padding: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    h2{
+      text-align: center;
+    }
+    #refLink{
+      font-weight: bold;
+      text-align: center;
+    }
+    .center-text{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="come">Your Profile</div>
+
+  <div style="padding: 20px;">
+    <h2>UID: <span id="userUID">Loading...</span></h2>
+    <p class="center-text"><strong>Your Referral Link:</strong></p>
+    <input id="refLink" readonly />
+  </div>
+
+  <div class="card">
+    <p><strong>Total Capital:</strong> $<span id="capital">0.00</span></p>
+    <p><strong>Profit Earned:</strong> $<span id="profit">0.00</span></p>
+    <p><strong>Referral Commission:</strong> $<span id="commission">0.00</span></p>
+    <p><strong>Total Account Value:</strong> $<span id="total">0.00</span></p>
+  </div>
+
+  <div class="card">
+    <button onclick="alert('coming soon')">Set Login Password</button>
+    <button onclick="alert('coming soon')">Set Withdrawal Password</button>
+    <button onclick="alert('coming soon')">Set Payment Method</button>
+    <button onclick="alert('coming soon')">Withdraw</button>
+    <button onclick="alert('coming soon')">Deposit</button>
+  </div>
+
+  <div style="padding: 20px;">
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const demoMode = true; // Set to false for real API
+    const apiURL = 'https://YOUR_BACKEND_URL'; // Replace when demoMode is false
+
+    // Redirect if not logged in
+    if (!localStorage.getItem('loggedIn')) {
+      alert("Please log in first.");
+      window.location.href = 'login.html';
+    }
+
+    // Load UID and set referral link
+    const uid = localStorage.getItem('uid') || 'UID0000';
+    document.getElementById('userUID').textContent = uid;
+    document.getElementById('refLink').value = `${window.location.origin}/register.html?ref=${uid}`;
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('token');
+      localStorage.removeItem('uid');
+      window.location.href = 'login.html';
+    }
+
+    // Load profile data
+    async function loadProfile() {
+      if (demoMode) {
+        // Demo/mock data
+        const capital = 500;
+        const profit = 120;
+        const commission = 30;
+        const total = capital + profit + commission;
+
+        document.getElementById('capital').innerText = capital.toFixed(2);
+        document.getElementById('profit').innerText = profit.toFixed(2);
+        document.getElementById('commission').innerText = commission.toFixed(2);
+        document.getElementById('total').innerText = total.toFixed(2);
+      } else {
+        // Real backend mode
+        const token = localStorage.getItem('token');
+        try {
+          const res = await fetch(`${apiURL}/api/auth/me`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          if (!res.ok) throw new Error('Unauthorized');
+
+          const user = await res.json();
+          const capital = user.capital || 0;
+          const profit = user.profit || 0;
+          const commission = user.commission || 0;
+          const total = capital + profit + commission;
+
+          document.getElementById('capital').innerText = capital.toFixed(2);
+          document.getElementById('profit').innerText = profit.toFixed(2);
+          document.getElementById('commission').innerText = commission.toFixed(2);
+          document.getElementById('total').innerText = total.toFixed(2);
+        } catch (err) {
+          alert('Session expired or invalid. Please log in again.');
+          logout();
+        }
+      }
+    }
+
+    loadProfile();
+  </script>
+  <div id="nav-placeholder"></div>
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+      });
+  </script>
+</body>
+</html>

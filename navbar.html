@@ -1,0 +1,211 @@
+ <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<style>
+  :root {
+    --primary: #007bff;
+    --text: #ffffff;
+  }
+
+  nav {
+    font-family: sans-serif;
+     background: linear-gradient(145deg, #3b39c2, #001f1f);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  }
+
+  nav a {
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  nav a.active {
+    color: var(--primary);
+    font-weight: bold;
+  }
+
+  nav a.active i {
+    color: var(--primary);
+  }
+
+  nav i {
+    margin-right: 6px;
+  }
+
+  /* Bottom Nav */
+  #bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 3px solid #f89a0d;
+     border-bottom: 2px solid #f89a0d;
+      background: linear-gradient(145deg, #3b39c2, #001f1f);
+    z-index: 1000;
+    padding: 20px 0;
+  }
+
+  #bottom-nav a {
+    flex: 1;
+    flex-direction: column;
+    font-size: 15px;
+    color: var(--text);
+    font-weight: bold;
+    color: #fcfcfc;
+  }
+
+  #bottom-nav a i {
+    font-size: 20px;
+    margin: 2px 0;
+  }
+
+  /* Top Nav (Sticky Desktop) */
+  #top-nav {
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    right: 0;
+     border-top: 3px solid #f89a0d;
+     border-bottom: 2px solid #f89a0d;
+    z-index: 9999;
+    padding: 20px 10px;
+  
+    background: linear-gradient(145deg, #3b39c2, #001f1f);
+    color: #f8f5f5;
+    position: fixed;
+  }
+
+
+  @media (min-width:768px) {
+   #bottom-nav{
+        display: none;
+    }
+}
+@media (max-width:767px) {
+    #top-nav{
+        display: none;
+    }
+}
+
+  /* Responsive behavior */
+
+  .nav-links{
+    display: flex;
+    gap: 10px;
+
+  }
+  .nav-links a{
+    color: #fafbfc;
+    text-decoration: none;
+    font-weight: bolder;
+
+  }
+  .logo{
+    font-size: 20px;
+    font-weight: bolder;
+  }
+</style>
+
+<!-- Top Nav (Desktop) -->
+<nav id="top-nav">
+    <div class="logo">mine</div>
+ <div class="nav-links">
+    <a href="home.html" class="nav-link" data-page="home"><i class="fas fa-house"></i> Home</a>
+    <a href="index.html" class="nav-link" data-page="invest"><i class="fas fa-coins"></i> Invest</a>
+    <a href="team.html" class="nav-link" data-page="team"><i class="fas fa-users"></i> Team</a>
+   <a href="profile.html" class="nav-link" data-page="profile"><i class="fas fa-user-circle"></i> Profile</a>
+  </div>
+</nav>
+
+<!-- Bottom Nav (Mobile) -->
+<nav id="bottom-nav">
+  <a href="home.html" class="nav-link" data-page="home">
+    <i class="fas fa-house"></i>
+    Home
+  </a>
+  <a href="index.html" class="nav-link" data-page="invest">
+    <i class="fas fa-coins"></i>
+    Invest
+  </a>
+  <a href="team.html" class="nav-link" data-page="team">
+    <i class="fas fa-users"></i>
+    Team
+  </a>
+  <a href="profile.html" class="nav-link" data-page="profile">
+    <i class="fas fa-user-circle"></i>
+    Profile
+  </a>
+</nav>
+
+<script>
+  // Automatically highlight active tab based on current URL
+  const path = window.location.pathname.split('/').pop();
+  const pageMap = {
+    'home.html': 'home',
+    'index.html': 'invest',
+    'team.html': 'team',
+    'profile.html': 'profile'
+  };
+  const activePage = pageMap[path];
+  document.querySelectorAll('.nav-link').forEach(link => {
+    if (link.dataset.page === activePage) {
+      link.classList.add('active');
+    }
+  });
+</script>
+
+<!--<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    font-family:arial , sans-serif;
+    padding-top:60px;
+    padding-bottom:90px;
+
+}
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #606cd8;
+     background: oklch(48.5% 0.27277 264.049);
+    z-index: 1000;
+    padding: 20px 0;
+    width: 100%;
+
+}
+.navbar a{
+color: #007bff;
+text-decoration: none;
+font-weight: bolder;
+}
+.navbar-top{
+    top: 0;
+}
+.navbar-bottom{
+    bottom: 0;
+}
+@media (min-width:768px) {
+    .navbar-bottom{
+        display: none;
+    }
+}
+@media (max-width:767px) {
+    .navbar-top{
+        display: none;
+    }
+}
+</style>-->

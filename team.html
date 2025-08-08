@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Team - Achorvest Capital</title>
+  <meta name="description" content="View your referral team and commissions with Achorvest Capital. Track earnings from levels 1 to 3 and share your unique referral link." />
+  <meta name="keywords" content="Achorvest Capital, referral program, investment, team commissions, passive income, Uganda investment" />
+  <meta name="author" content="Achorvest Capital" />
+
+  <!-- Open Graph for Facebook and LinkedIn -->
+  <meta property="og:title" content="Your Referral Team - Achorvest Capital" />
+  <meta property="og:description" content="Track your earnings from your referral network and share your referral link with others." />
+  <meta property="og:image" content="https://yourdomain.com/images/share-preview.jpg" />
+  <meta property="og:url" content="https://yourdomain.com/team.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Your Referral Team - Achorvest Capital" />
+  <meta name="twitter:description" content="Track your referral team and commissions across three levels." />
+  <meta name="twitter:image" content="https://yourdomain.com/images/share-preview.jpg" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourdomain.com/team.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://yourdomain.com/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #007bff;
+      --text: #ffffff;
+    }
+
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding-bottom: 80px;
+      background: linear-gradient(145deg, #000000, #001f1f);
+      color: var(--text);
+      color: #ffffff;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .ref-list {
+      background: #fff;
+      padding: 15px;
+      margin: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .ref-list:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .ref-item {
+      background: #f1f1f1;
+      padding: 8px;
+      border-radius: 4px;
+      margin: 6px 0;
+    }
+
+    .earning {
+      font-weight: bold;
+      text-align: center;
+      color: green;
+      font-size: 1.2rem;
+    }
+
+    
+
+   
+
+    
+
+    
+   
+
+   
+    /*#top-nav .centre {
+      display: flex;
+      gap: 20px;
+    }*/
+
+    .ref-section {
+      padding: 90px 20px 20px;
+    }
+
+    .ref-controls {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .ref-controls form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ref-controls input {
+      width: 80%;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .ref-controls button {
+      padding: 8px 16px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    nav a.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    @media screen and (max-width: 767px) {
+      #top-nav {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      #bottom-nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!--<nav id="top-nav" aria-label="Main navigation">
+    <h2>Achorvest Capital</h2>
+    <div class="centre">
+      <a href="home.html">Home</a>
+      <a href="index.html">Invest</a>
+      <a href="team.html">Team</a>
+      <a href="profile.html">Profile</a>
+    </div>
+  </nav>-->
+
+  <section class="ref-section">
+    <h2>UID: <span id="userUID">Loading...</span></h2>
+    <div class="ref-controls">
+      <p>Your Referral Link:</p>
+      <input id="refLink" readonly />
+      <button type="button" id="copyBtn">Copy</button>
+    </div>
+  </section>
+
+  <main>
+    <h1>Your Referral Team</h1>
+
+    <h2>Level 1 (15%)</h2>
+    <div class="ref-list" id="level1"></div>
+
+    <h2>Level 2 (10%)</h2>
+    <div class="ref-list" id="level2"></div>
+
+    <h2>Level 3 (5%)</h2>
+    <div class="ref-list" id="level3"></div>
+
+    <h2>Total Commission</h2>
+    <p class="earning" id="totalCommission">UGX 0.00</p>
+  </main>
+
+  <nav id="bottom-nav" aria-label="Mobile navigation">
+    <a href="home.html"><i class="fas fa-house"></i>Home</a>
+    <a href="index.html"><i class="fas fa-coins"></i>Invest</a>
+    <a href="team.html"><i class="fas fa-users"></i>Team</a>
+    <a href="profile.html"><i class="fas fa-user-circle"></i>Profile</a>
+  </nav>
+
+  <script>
+    const uid = localStorage.getItem('uid') || 'UID0000';
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    document.getElementById('userUID').textContent = uid;
+    const refLink = `${window.location.origin}/register.html?ref=${uid}`;
+    const refInput = document.getElementById('refLink');
+    refInput.value = refLink;
+
+    document.getElementById("copyBtn").addEventListener("click", () => {
+      navigator.clipboard.writeText(refInput.value).then(() => {
+        alert("Copied: " + refInput.value);
+      });
+    });
+
+    const getRefs = (uid) => users.filter(u => u.referredBy === uid);
+    const level1 = getRefs(uid);
+    const level2 = level1.flatMap(l1 => getRefs(l1.uid));
+    const level3 = level2.flatMap(l2 => getRefs(l2.uid));
+
+    const renderList = (level, elementId, percent) => {
+      const container = document.getElementById(elementId);
+      let total = 0;
+      level.forEach(user => {
+        const capital = user.capital || 0;
+        const earning = capital * (percent / 100);
+        total += earning;
+
+        const item = document.createElement('div');
+        item.className = 'ref-item';
+        item.innerHTML = `${user.username} (${user.uid}) — UGX ${earning.toFixed(2)}`;
+        container.appendChild(item);
+      });
+      return total;
+    };
+
+    const total1 = renderList(level1, 'level1', 15);
+    const total2 = renderList(level2, 'level2', 10);
+    const total3 = renderList(level3, 'level3', 5);
+    const totalCommission = total1 + total2 + total3;
+    document.getElementById('totalCommission').textContent = `UGX ${totalCommission.toFixed(2)}`;
+
+    const currentPage = location.pathname.split("/").pop();
+    document.querySelectorAll("#top-nav a, #bottom-nav a").forEach(link => {
+      if (link.getAttribute("href") === currentPage) {
+        link.classList.add("active");
+      }
+    });
+  </script>
+<div id="nav-placeholder"></div>
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+      });
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Investments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(145deg, #000000, #001f1f);
+      padding: 20px;
+      color: #ffee06;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .investment {
+      background: linear-gradient(145deg, #3b39c2, #001f1f);
+      border-left: 4px solid #cdf005;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .expired {
+      background: #ffe0e0;
+      border-left: 4px solid #ff4c4c;
+    }
+  </style>
+</head>
+<body>
+  <h1>MY FERRIES</h1>
+  <div id="investments"></div>
+
+  <script>{
+    const container = document.getElementById("investments");
+    const now = new Date();
+
+    let hasInvestments = false;
+
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith("package_")) {
+        const investments = JSON.parse(localStorage.getItem(key));
+
+        investments.forEach((entry, index) => {
+          const expiry = new Date(entry.expires);
+          const isExpired = now > expiry;
+
+          const div = document.createElement("div");
+          div.className = "investment" + (isExpired ? " expired" : "");
+
+          div.innerHTML = `
+            <strong>${entry.name}</strong><br>
+            Amount: UGX ${entry.amount}<br>
+            Purchased on: ${new Date(entry.date).toDateString()}<br>
+          
+            Expires on: ${expiry.toDateString()}<br>
+            Purchase #${index + 1} of 4
+            ${isExpired ? "<br><strong style='color:red;'>Expired</strong>" : ""}
+          `;
+
+          container.appendChild(div);
+          hasInvestments = true;
+        });
+      }
+    });
+
+    if (!hasInvestments) {
+      container.innerHTML = "<p>No investments yet.</p>";
+    }}
+  </script>
+</body>
+</html>
+<script>
+  const container = document.createElement('div');
+  container.style.padding = '20px';
+
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith("package_")) {
+      const data = JSON.parse(localStorage.getItem(key));
+      data.forEach((entry, i) => {
+        const box = document.createElement('div');
+        box.style.margin = '10px 0';
+        box.style.padding = '10px';
+        box.style.background = '#e0f7fa';
+        box.style.borderRadius = '8px';
+
+        box.innerHTML = `
+          <strong>${entry.name}</strong><br>
+          Invested: UGX ${entry.amount}<br>
+          Purchased on: ${new Date(entry.date).toDateString()}<br>
+          Expires on: ${new Date(entry.expires).toDateString()}<br>
+          Attempt: ${i + 1} of 4
+        `;
+        container.appendChild(box);
+      });
+    }
+  });
+
+  document.body.appendChild(container);
+</script>
+ <div id="nav-placeholder"></div>
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('nav-placeholder').innerHTML = html;
+      });
+  </script>
